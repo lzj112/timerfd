@@ -13,10 +13,6 @@ void Timer::setUpTimer(int firstTime, int interval)
 
     //获取时间
     int ret;
-    // if (type_ == RELATIVE)
-    //     ret = clock_gettime(CLOCK_REALTIME, &now);
-    // else 
-    //     ret = clock_gettime(CLOCK_MONOTONIC, &now);
     ret = clock_gettime(type_, &now);
     assert(ret != -1);
 
