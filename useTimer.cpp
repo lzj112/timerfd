@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     uint64_t exp;
     ssize_t s;
 
-    timeFd.setUpTimer(2, 0);
+    timeFd.setUpTimer(2, 1);
     for (; ;) 
     {
         int num = epoll_wait(epollfd, events, MAXNUM, 0);

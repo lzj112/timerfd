@@ -3,7 +3,6 @@
 Timer::Timer(int type) : type_(type), timerfd_(-1) 
 {
     timerfd_ = timerfd_create(type, TFD_NONBLOCK);
-    // timerfd_ = timerfd_create(CLOCK_REALTIME, TFD_NONBLOCK);
     assert(timerfd_ != -1);
 }
 
@@ -11,15 +10,14 @@ void Timer::setUpTimer(int firstTime, int interval)
 {
     struct itimerspec new_value;
     struct timespec now;
-    // uint64_t exp;
-    // ssize_t s;
 
     //获取时间
     int ret;
-    if (type_ == RELATIVE)
-        ret = clock_gettime(CLOCK_REALTIME, &now);
-    else 
-        ret = clock_gettime(CLOCK_MONOTONIC, &now);
+    // if (type_ == RELATIVE)
+    //     ret = clock_gettime(CLOCK_REALTIME, &now);
+    // else 
+    //     ret = clock_gettime(CLOCK_MONOTONIC, &now);
+    ret = clock_gettime(type_, &now);
     assert(ret != -1);
 
     //设置到期时间
@@ -34,9 +32,6 @@ void Timer::setUpTimer(int firstTime, int interval)
 
 void Timer::startTimer(const itimerspec& new_value) 
 {
-    //使用type_还是判断是否用0 test
-    // int ret = timerfd_settime(timerfd_, type_, &new_value, nullptr); //启动定时器
-    // int ret = timerfd_settime(timerfd_, 0, &new_value, nullptr); //
     int ret = timerfd_settime(timerfd_, TFD_TIMER_ABSTIME, &new_value, nullptr);
     assert(ret != -1);
 }
