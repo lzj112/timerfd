@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
     uint64_t exp;
     ssize_t s;
 
-    timeFd.setUpTimer(2, 1);
+    timeFd.setUpTimer(2, 1);    //启动定时器,初次触发为两秒后,之后间隔时间1秒
     for (; ;) 
     {
         int num = epoll_wait(epollfd, events, MAXNUM, 0);
@@ -41,6 +41,8 @@ int main(int argc, char *argv[])
                 {
                     s = read(events[i].data.fd, &exp, sizeof(uint64_t)); //需要读出uint64_t大小, 不然会发生错误
                     assert(s == sizeof(uint64_t));
+                    //do things...
+                    // timeFd.shutdown();  //关闭定时器
                     cout << "here is timer" << endl;
                 }
             }
