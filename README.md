@@ -1,6 +1,7 @@
 # Linux下特有定时器
 
-该例子封装一个 timerfd 定时器, main 中创建实例并使用 epoll 监听
+该例子封装一个 timerfd 定时器, main 中创建实例并使用 epoll 监听, 具体的关于`timerfd`的介绍点[这里](https://blog.csdn.net/weixin_36888577/article/details/81570793)
+
 ## 相对时间
 
 `CLOCK_REALTIME`
