@@ -17,12 +17,18 @@
 
 ---
 
+# 注意
 
-# 注意!
+`timerfd_settime`第二个参数如果是 0, 是相对时间, 如果是 `TFD_TIMER_ABSTIME`, 代表绝对时间, 但是这里还有需要注意的点
 
-默认情况下，`new_value`中指定的初始过期时间相对于调用时计时器时钟上的当前时间(即, `new_value.it_value`指定相对于 clockid 指定的时钟的当前值的时间)。
+>By default, the initial expiration time specified in new_value is interpreted relative to the current time on the timer's clock at the time of the call (i.e., new_value.it_value specifies a time relative to the current value of the clock specified by clockid).
+>
+>---
+>
+>默认情况下, `new_value`中指定的初始过期时间相对于调用时计时器时钟上的当前时间(即, `new_value.it_value` 指定相对于 clockid 指定的时钟的当前值的时间)。
 
-所以使用`timerfd_settime`设置初始到期时间时, 在`new_value.it_value`中设置初次定时的时间
+也就是说 
+`new_value.it_value`设置初次到期的时间`firsttime`
 
-如果`timerfd_settime`第二个参数设置为 0, `new_value.it_value`设置为 `firsttime`
-如果`timerfd_settime`第二个参数设置为`TFD_TIMER_ABSTIME`, `new_value.it_value`设置为 `now.tv_sec + firsttime`
+如果`timerfd_settime`第二个参数设置为 0, `new_value.it_value  = firsttime`
+如果`timerfd_settime`第二个参数设置为`TFD_TIMER_ABSTIME`,`new_value.it_value = now.tv_sec + firsttime`
