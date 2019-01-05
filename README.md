@@ -15,4 +15,14 @@
 
 使用完定时器记得`::close`
 
+---
 
+
+# 注意!
+
+默认情况下，`new_value`中指定的初始过期时间相对于调用时计时器时钟上的当前时间(即, `new_value.it_value`指定相对于 clockid 指定的时钟的当前值的时间)。
+
+所以使用`timerfd_settime`设置初始到期时间时, 在`new_value.it_value`中设置初次定时的时间
+
+如果`timerfd_settime`第二个参数设置为 0, `new_value.it_value`设置为 `firsttime`
+如果`timerfd_settime`第二个参数设置为`TFD_TIMER_ABSTIME`, `new_value.it_value`设置为 `now.tv_sec + firsttime`
