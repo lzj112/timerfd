@@ -14,7 +14,8 @@ const int MAXNUM = 20;
 int main(int argc, char *argv[])
 {
     Timer timeFd;
-
+    timeFd.setUpTimer(1, 1);
+    
     int epollfd = epoll_create(1);  //创建epoll实例对象
 
     struct epoll_event ev;
@@ -23,10 +24,10 @@ int main(int argc, char *argv[])
     ev.events = EPOLLIN | EPOLLET;
     epoll_ctl(epollfd, EPOLL_CTL_ADD, timeFd.fd(), &ev); //添加到epoll事件集合
 
+
     uint64_t exp;
     ssize_t s;
 
-    timeFd.setUpTimer(2, 1);    //启动定时器,初次触发为两秒后,之后间隔时间1秒
     for (; ;) 
     {
         int num = epoll_wait(epollfd, events, MAXNUM, 0);
@@ -43,8 +44,9 @@ int main(int argc, char *argv[])
                     assert(s == sizeof(uint64_t));
                     //do things...
                     // timeFd.shutdown();  //关闭定时器
-                    cout << "here is timer" << endl;
+                    cout << "here is timer 1" << endl;
                 }
+                
             }
         }
     }
